@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Random;
 
 import org.bukkit.Material;
-import org.bukkit.block.Chest;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -61,7 +60,11 @@ public class ChestItems {
 			for(Map.Entry<Material, Double> e : prob.entrySet()){
 				x -= e.getValue();
 				if(x < 0){
-					iv.addItem(new ItemStack(e.getKey(), poisson(count.get(e.getKey()))));
+					int ni = count.get(e.getKey());
+					if(ni < 0) ni = 1;
+					else ni = poisson(ni);
+					if(ni == 0) ni = 1;
+					iv.addItem(new ItemStack(e.getKey(), ni));
 					break;
 				}
 			}

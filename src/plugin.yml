@@ -15,6 +15,16 @@ commands:
     permission-message: You don't have permission.
   kistenfuellen:
     description: This is a kistenfuellen command.
-    usage: /kistenfuellen world x1 y1 z1 x2 y2 z2
+    usage: /kistenfuellen world x1 y1 z1 x2 y2 z2 file
+    permission: TestPlugin.basic
+    permission-message: You don't have permission.
+  kistenleeren:
+    description: This is a kistenleeren command.
+    usage: /kistenleeren world x1 y1 z1 x2 y2 z2
+    permission: TestPlugin.basic
+    permission-message: You don't have permission.
+  copyen:
+    description: This is a copyen command.
+    usage: /copyen true/false
     permission: TestPlugin.basic
     permission-message: You don't have permission.

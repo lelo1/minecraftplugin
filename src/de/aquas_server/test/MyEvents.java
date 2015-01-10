@@ -9,15 +9,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.BlockFace;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 
 public class MyEvents implements Listener{
+	static Map<UUID,Boolean> copyen;
 	static Map<UUID,Location> loc, loc2;
 	static Map<UUID,Integer> state;
 	public static Map<UUID, Map<String, Location>> jump;
@@ -26,15 +25,18 @@ public class MyEvents implements Listener{
 		loc2 = new HashMap<UUID,Location>();
 		state = new HashMap<UUID,Integer>();
 		jump = new HashMap<UUID,Map<String,Location>>();
+		copyen = new HashMap<UUID,Boolean>();
 	}
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent event){
 		UUID p;
 		Location l;
 		
+		if(event.getPlayer() == null || event.getClickedBlock() == null)
+			return;
 		p = event.getPlayer().getUniqueId();
 		l = event.getClickedBlock().getLocation();
-		if(event.hasItem() && event.getItem().getType() == Material.STICK){
+		if(event.hasItem() && event.getItem().getType() == Material.STICK && copyen.get(p) != null && copyen.get(p).booleanValue()){
 			if(state.get(p) == null)
 					state.put(p, 0);
 			switch(state.get(p).intValue()){
@@ -57,6 +59,7 @@ public class MyEvents implements Listener{
 		if(event.hasItem() && event.getItem().getType() == Material.BLAZE_ROD)
 			state.put(p, 0);
 	}
+	/*
 	@EventHandler
 	public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
 		if(event.getPlayer().getItemInHand().getType() == Material.BONE && event.getRightClicked().getType().isAlive()){
@@ -65,6 +68,7 @@ public class MyEvents implements Listener{
 				
 		}
 	}
+	*/
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent event){
